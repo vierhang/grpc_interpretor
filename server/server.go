@@ -21,7 +21,9 @@ func main() {
 	// 自定义拦截器逻辑
 	myInterceptor := func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 		fmt.Println("接收到了一个请求")
-		return handler(ctx, req)
+		res, err := handler(ctx, req)
+		fmt.Println("请求完成")
+		return res, err
 	}
 	// 拦截器
 	opt := grpc.UnaryInterceptor(myInterceptor)
