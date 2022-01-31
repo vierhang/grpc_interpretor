@@ -15,8 +15,10 @@ func main() {
 		fmt.Println("耗时", time.Since(start))
 		return err
 	}
-	opt := grpc.WithUnaryInterceptor(myInterceptor)
-	dial, err := grpc.Dial("127.0.0.1:50052", grpc.WithInsecure(), opt)
+	var opts []grpc.DialOption
+	opts = append(opts, grpc.WithInsecure())
+	opts = append(opts, grpc.WithUnaryInterceptor(myInterceptor))
+	dial, err := grpc.Dial("127.0.0.1:50052", opts...)
 	if err != nil {
 		panic(err)
 	}
